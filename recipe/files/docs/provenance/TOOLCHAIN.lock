@@ -1,0 +1,77 @@
+{
+  "build_method": "source-rebuild-python",
+  "chain_id": 1160,
+  "dep_bumps": [
+    {
+      "module": "dnspython",
+      "to": "2.9.2",
+      "why": "GHSA-vvf4-9x63-8xvv (high): dnspython 2.9.1 -> 2.9.2 (OSV; on PyPI since 2026-11-03); planned by the re-release agenda, applied before G8 refuses the in-flight chain"
+    }
+  ],
+  "expected_residuals": [],
+  "images": [
+    {
+      "digest": "sha256:9c7f200c07e3d4a03e7249d2c16bf66a51120fb876aa2242cf31451412543289",
+      "ref": "ubuntu:24.04",
+      "role": "builder"
+    },
+    {
+      "digest": "sha256:9c7f200c07e3d4a03e7249d2c16bf66a51120fb876aa2242cf31451412543289",
+      "ref": "ubuntu:24.04",
+      "role": "base"
+    }
+  ],
+  "mod_replaces": [],
+  "runtime_base": {
+    "kind": "chisel",
+    "provides": [
+      "airflow"
+    ],
+    "py_run": [
+      "rm -rf /usr/local/lib/python3.13/site-packages/pip /usr/local/lib/python3.13/site-packages/pip-*.dist-info /usr/local/bin/pip /usr/local/bin/pip3 /usr/local/bin/pip3.13"
+    ],
+    "shell": true,
+    "slices": [
+      "libgcc-s1_libs",
+      "libstdc++6_libs"
+    ],
+    "tools": [
+      "bash",
+      "coreutils",
+      "sed",
+      "grep",
+      "sqlite3",
+      "tar"
+    ]
+  },
+  "schema": "kitforge.toolchain_lock.v1",
+  "slug": "airflow",
+  "source": {
+    "build_packages": [
+      "curl",
+      "ca-certificates",
+      "git"
+    ],
+    "builder_image": "ubuntu:24.04",
+    "commit": "619a787ac81e8b7c8a9102fc78e3f0b00625d04e",
+    "commit_epoch": 1793861007,
+    "pip_constraints_sha256": "698d3d1ffc27385c8b69c511bed71123d126bddad66dcad054ef0bcc3398e12c",
+    "pip_constraints_url": "https://raw.githubusercontent.com/apache/airflow/constraints-3.4.0/constraints-3.13.txt",
+    "pip_install_spec": "apache-airflow[postgres]==3.4.0",
+    "pip_wheel_args": [
+      "--prefer-binary"
+    ],
+    "python_runtime": {
+      "provider": "ubuntu-source",
+      "sha256": "abb0102e6d4ae027509bcb82327d9dd85515b44a3ba8ad538cfc5e9847029f68",
+      "version": "3.13.18"
+    },
+    "python_version": "3.13",
+    "ref": "3.4.0",
+    "repo": "https://github.com/apache/airflow",
+    "source_date_epoch": 1795160985,
+    "source_date_epoch_basis": "release-cut",
+    "source_date_epoch_provenance": "the time release 3.4.0-CE-ubuntu24.04-r3 was cut (2026-11-20T07:49:45Z), by scripts/retarget.py --rev-bump: ReadyStack dates an image by when its release was packaged (owner 2026-11-10), recorded here once and used by every rebuild of the release; it builds upstream commit 619a787ac81e, dated 2026-11-05T06:43:27Z (source.commit_epoch)."
+  },
+  "version": "3.4.0"
+}

@@ -1,0 +1,102 @@
+{
+  "schema": "kitforge.build_recipe.v1",
+  "slug": "airflow",
+  "image": "readystack/airflow:3.4.0-CE-ubuntu24.04-r3",
+  "build_method": "source-rebuild-python",
+  "source": {
+    "repo": "https://github.com/apache/airflow",
+    "ref": "3.4.0",
+    "builder_image": "ubuntu:24.04",
+    "python_version": "3.13",
+    "python_runtime": {
+      "provider": "ubuntu-source",
+      "version": "3.13.18",
+      "sha256": "abb0102e6d4ae027509bcb82327d9dd85515b44a3ba8ad538cfc5e9847029f68",
+      "_note": "CPython 3.12.16 compiled from python.org's release tarball (sha256 from python.org's release API, scripts/cpython-pin.py) against Ubuntu 24.04's own libraries -- libssl3t64, libsqlite3-0, zlib1g, libexpat1, libffi8, liblzma5, libbz2-1.0, libuuid1, libzstd1, libncursesw6, libreadline8t64 -- which Ubuntu's security team maintains, the scan sees as debs, and apt upgrades fix (owner decision 2026-10-10, after python-build-standalone 20261009 was found to bundle SQLite 3.53.1 with two HIGH CVEs fixed upstream four months earlier). The vendor stage only fetches the tarball and the build toolchain's debs; the compile runs in the offline (--network=none) build, reproducibly (gen_dockerfile.cpython_build_cmd: SOURCE_DATE_EPOCH, no PGO/LTO, fixed --build triple and source path, stripped, checked-hash .pyc). Never built: _dbm, _gdbm, _tkinter (no Berkeley DB, GDBM or Tk); no test suite, idle, tkinter, turtledemo or static libpython in the image. mpdecimal is the copy in CPython's own source (noble has no libmpdec). Move the pin with scripts/cpython-pin.py --write for each CPython patch release."
+    },
+    "pip_install_spec": "apache-airflow[postgres]==3.4.0",
+    "pip_constraints_url": "https://raw.githubusercontent.com/apache/airflow/constraints-3.4.0/constraints-3.13.txt",
+    "pip_constraints_sha256": "698d3d1ffc27385c8b69c511bed71123d126bddad66dcad054ef0bcc3398e12c",
+    "_install_note": "The [postgres] extra adds apache-airflow-providers-postgres plus psycopg/asyncpg so the image can be pointed at a real Postgres by an operator while still defaulting to the self-contained SQLite store. Installing the meta-package transitively pulls core, task-sdk and the providers core hard-depends on; that is a complete working instance and nothing needs hand-assembling. Python 3.13 (from 3.4.0-CE-ubuntu24.04-r1; 3.3.2 releases ran 3.12): the interpreter upstream's own apache/airflow:3.4.0 image ships (AIRFLOW_PYTHON_VERSION 3.13.18, measured 2026-11-08), and its constraints-3.13.txt closure for apache-airflow[postgres]==3.4.0 resolves to 138 wheels, all binary (pip download --only-binary=:all: on python:3.13-slim, 2026-11-08), with no grype finding in the installed set (grype 0.120.1, 2026-11-08). On 3.12.16, CPython itself carried six medium findings grype lists as fixed only on newer lines; on 3.13.18, two.",
+    "_constraints_note": "Upstream's constraints file is the BASE set of pins and dep_bumps replace matching lines in it \u2014 pip refuses a constraints file naming one package twice, so the renderer greps the bumped modules OUT of upstream's copy before appending ours. This matters more here than usual: the file is 'highest resolution as of the release date' (generated 2026-09-17), so it pins DOWNWARD, and a CVE fix published later would be silently pinned back to the vulnerable version by the very file we fetched if bumps did not win.",
+    "build_packages": [
+      "curl",
+      "ca-certificates",
+      "git"
+    ],
+    "_build_packages_note": "curl is required \u2014 the vendor stage fetches pip_constraints_url with it. The usual compiler set (g++/gcc/libc-dev/libffi-dev/...) is deliberately NOT here: the recon proved the closure is 100% binary wheels under --only-binary=:all: for cp313/manylinux x86_64 (3.4.0 on Python 3.13, 138 wheels, 2026-11-08; the first recon was cp312), including cryptography, grpcio, psycopg-binary, libcst, msgspec, uvloop, watchfiles, setproctitle, pendulum and rpds-py. Upstream's own Dockerfile installs a large DEV_APT_DEPS list, but that is for their 28-extra default scope, not ours. If a future retarget adds an extra whose wheel is missing, add the compilers back rather than letting pip build silently.",
+    "pip_wheel_args": [
+      "--prefer-binary"
+    ],
+    "source_date_epoch": 1795160985,
+    "source_date_epoch_provenance": "the time release 3.4.0-CE-ubuntu24.04-r3 was cut (2026-11-20T07:49:45Z), by scripts/retarget.py --rev-bump: ReadyStack dates an image by when its release was packaged (owner 2026-11-10), recorded here once and used by every rebuild of the release; it builds upstream commit 619a787ac81e, dated 2026-11-05T06:43:27Z (source.commit_epoch).",
+    "_version_note": "3.3.2 is the LATEST airflow GA (queue-latest-version policy, owner 2026-06-25), published 2026-09-17, no leading 'v'. RETARGET WARNING: this repo also tags helm-chart/*, airflow-ctl/* and java-sdk/*, so a naive 'latest tag' read picks up something like java-sdk/1.0.0-beta1. Filter to bare CalVer-ish release tags. The constraints branch name tracks the version exactly (constraints-<version>), so pip_constraints_url must be retargeted in lockstep or the build pins the previous release.",
+    "commit": "619a787ac81e8b7c8a9102fc78e3f0b00625d04e",
+    "source_date_epoch_basis": "release-cut",
+    "commit_epoch": 1793861007
+  },
+  "binaries_from_source": null,
+  "runtime_packages": [
+    "base-files",
+    "base-passwd",
+    "bash",
+    "ca-certificates",
+    "coreutils",
+    "dash",
+    "gcc-14-base",
+    "grep",
+    "libacl1",
+    "libattr1",
+    "libbz2-1.0",
+    "libc-bin",
+    "libc6",
+    "libcap2",
+    "libcrypt1",
+    "libexpat1",
+    "libffi8",
+    "libgcc-s1",
+    "libgmp10",
+    "liblzma5",
+    "libncursesw6",
+    "libpcre2-8-0",
+    "libreadline8t64",
+    "libselinux1",
+    "libsqlite3-0",
+    "libssl3t64",
+    "libstdc++6",
+    "libtinfo6",
+    "libuuid1",
+    "libzstd1",
+    "netbase",
+    "openssl",
+    "readline-common",
+    "sed",
+    "sqlite3",
+    "tar",
+    "tzdata",
+    "zlib1g"
+  ],
+  "runtime_base": {
+    "kind": "chisel",
+    "shell": true,
+    "tools": [
+      "bash",
+      "coreutils",
+      "sed",
+      "grep",
+      "sqlite3",
+      "tar"
+    ],
+    "slices": [
+      "libgcc-s1_libs",
+      "libstdc++6_libs"
+    ],
+    "provides": [
+      "airflow"
+    ],
+    "py_run": [
+      "rm -rf /usr/local/lib/python3.13/site-packages/pip /usr/local/lib/python3.13/site-packages/pip-*.dist-info /usr/local/bin/pip /usr/local/bin/pip3 /usr/local/bin/pip3.13"
+    ],
+    "packages": "vendored/chisel/packages.tsv"
+  }
+}

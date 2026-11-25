@@ -1,0 +1,6 @@
+image_manifest_digest=sha256:02ad7df0171546c6f114434643ae9369bb74ca66943eadeb81c07a2eee313eba
+config_digest=sha256:b1ff264563a5bcace1ec2e9f794e84a3752a55672784d9c31f65b5b2e91f3352
+tag=readystack/airflow:3.4.0-CE-ubuntu24.04-r3
+probe_port=8080
+probe_path=/api/v2/monitor/health
+probe_timeout=180
