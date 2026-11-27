@@ -21,8 +21,8 @@
     "context": ".",
     "dockerfile": "Dockerfile.offline.pinned",
     "mtime_policy": "clamp",
-    "source_date_epoch": 1795160985,
-    "tree_hash": "sha256:ef6e63388e33491657d19efd76855492078cc0559938f3e48b340f55abc83510"
+    "source_date_epoch": 1795644287,
+    "tree_hash": "sha256:ab66e0b97901bb6df847c9b0e356c01f0da367b652bef8ba370791f653a14e72"
   },
   "probe": {
     "http_path": "/api/v2/monitor/health",
@@ -31,8 +31,8 @@
   },
   "schema": "readystack-rebuild-bundle/v0.1",
   "subject": {
-    "config_digest": "sha256:b1ff264563a5bcace1ec2e9f794e84a3752a55672784d9c31f65b5b2e91f3352",
-    "image_manifest_digest": "sha256:02ad7df0171546c6f114434643ae9369bb74ca66943eadeb81c07a2eee313eba",
-    "name": "docker.io/readystack/airflow:3.4.0-CE-ubuntu24.04-r3"
+    "config_digest": "sha256:002ab9cfd4a82ede9eb2a6e2306a2bf10f80063029cf31a824def9a18453b523",
+    "image_manifest_digest": "sha256:322cab41ac2503ec78026c829f78662cd5c690367bda4a5c7d1b3ddc71d7371c",
+    "name": "docker.io/readystack/airflow:3.4.0-CE-ubuntu24.04-r4"
   }
 }

@@ -5,7 +5,7 @@
 # build debs, by the same command the vendor stage ran; linked against Ubuntu's libraries (debs the scan
 # sees, apt fixes). The runtime takes /usr/local from this stage and none of the toolchain.
 FROM ubuntu:24.04@sha256:9c7f200c07e3d4a03e7249d2c16bf66a51120fb876aa2242cf31451412543289 AS cpython
-ARG SOURCE_DATE_EPOCH=1795160985
+ARG SOURCE_DATE_EPOCH=1795644287
 ENV SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH}
 COPY vendored/python/debs/ /tmp/cpython-debs/
 COPY vendored/python/Python-3.13.18.tar.xz /tmp/Python-3.13.18.tar.xz
@@ -50,11 +50,11 @@ FROM golang:1.27.3-bookworm@sha256:972b4110ba0f47539a975c31e52c64765e1ff19f2d744
 WORKDIR /probe
 COPY rs-probe.go main.go
 COPY rs-probe.mod go.mod
-ENV CGO_ENABLED=0 GOTOOLCHAIN=local GOFLAGS="-buildvcs=false" GOPROXY=off SOURCE_DATE_EPOCH=1795160985
+ENV CGO_ENABLED=0 GOTOOLCHAIN=local GOFLAGS="-buildvcs=false" GOPROXY=off SOURCE_DATE_EPOCH=1795644287
 RUN go build -trimpath -ldflags='-s -w' -o /rs-probe .
 # the chiselled rootfs (vendored/chisel, cut by Dockerfile.vendor), the service user, the binaries
 FROM ubuntu:24.04@sha256:9c7f200c07e3d4a03e7249d2c16bf66a51120fb876aa2242cf31451412543289 AS rootfs
-ARG SOURCE_DATE_EPOCH=1795160985
+ARG SOURCE_DATE_EPOCH=1795644287
 ADD vendored/chisel/rootfs.tar /rootfs/
 RUN printf 'airflow:x:50000:50000::/opt/airflow:/bin/sh\n' >> /rootfs/etc/passwd && printf 'airflow:x:50000:\n' >> /rootfs/etc/group && \
     mkdir -p /rootfs/opt/airflow /rootfs/opt/airflow/dags /rootfs/opt/airflow/logs /rootfs/opt/airflow/plugins && chown -R 50000:50000 /rootfs/opt/airflow /rootfs/opt/airflow/dags /rootfs/opt/airflow/logs /rootfs/opt/airflow/plugins
@@ -73,11 +73,11 @@ RUN --mount=type=bind,source=vendored/chisel,target=/chisel set -eu; \
       { echo "/var/lib/dpkg/status does not list every package of vendored/chisel/packages.tsv" >&2; exit 1; }; \
     rm -rf /rootfs/var/log/dpkg.log /rootfs/var/log/alternatives.log /rootfs/var/log/apt /rootfs/var/cache/ldconfig/aux-cache /rootfs/var/cache/fontconfig
 FROM scratch
-ARG SOURCE_DATE_EPOCH=1795160985
+ARG SOURCE_DATE_EPOCH=1795644287
 COPY --from=rootfs /rootfs/ /
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/usr/local LANG=C.UTF-8 AIRFLOW_HOME=/opt/airflow AIRFLOW__CORE__LOAD_EXAMPLES=False AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db AIRFLOW__API__HOST=0.0.0.0 AIRFLOW__API__PORT=8080
 LABEL org.opencontainers.image.title="Apache Airflow"
-LABEL org.opencontainers.image.version="3.4.0-CE-ubuntu24.04-r3"
+LABEL org.opencontainers.image.version="3.4.0-CE-ubuntu24.04-r4"
 LABEL org.opencontainers.image.licenses="Apache-2.0"
 LABEL org.opencontainers.image.source="https://github.com/apache/airflow"
 LABEL org.opencontainers.image.description="Platform to programmatically author, schedule and monitor workflows"

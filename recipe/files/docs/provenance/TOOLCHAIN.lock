@@ -1,6 +1,13 @@
 {
+  "apt_refresh": [
+    {
+      "min_version": "2.6.1-2ubuntu0.7",
+      "package": "libexpat1",
+      "reason": "USN-9196-1: libexpat1 2.6.1-2ubuntu0.6 -> 2.6.1-2ubuntu0.7"
+    }
+  ],
   "build_method": "source-rebuild-python",
-  "chain_id": 1160,
+  "chain_id": 1274,
   "dep_bumps": [
     {
       "module": "dnspython",
@@ -69,9 +76,9 @@
     "python_version": "3.13",
     "ref": "3.4.0",
     "repo": "https://github.com/apache/airflow",
-    "source_date_epoch": 1795160985,
+    "source_date_epoch": 1795644287,
     "source_date_epoch_basis": "release-cut",
-    "source_date_epoch_provenance": "the time release 3.4.0-CE-ubuntu24.04-r3 was cut (2026-11-20T07:49:45Z), by scripts/retarget.py --rev-bump: ReadyStack dates an image by when its release was packaged (owner 2026-11-10), recorded here once and used by every rebuild of the release; it builds upstream commit 619a787ac81e, dated 2026-11-05T06:43:27Z (source.commit_epoch)."
+    "source_date_epoch_provenance": "the time release 3.4.0-CE-ubuntu24.04-r4 was cut (2026-11-25T22:04:47Z), by scripts/rerelease-agenda.py: ReadyStack dates an image by when its release was packaged (owner 2026-11-10), recorded here once and used by every rebuild of the release; it builds upstream commit 619a787ac81e, dated 2026-11-05T06:43:27Z (source.commit_epoch)."
   },
   "version": "3.4.0"
 }

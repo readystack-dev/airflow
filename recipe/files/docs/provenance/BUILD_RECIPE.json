@@ -1,7 +1,7 @@
 {
   "schema": "kitforge.build_recipe.v1",
   "slug": "airflow",
-  "image": "readystack/airflow:3.4.0-CE-ubuntu24.04-r3",
+  "image": "readystack/airflow:3.4.0-CE-ubuntu24.04-r4",
   "build_method": "source-rebuild-python",
   "source": {
     "repo": "https://github.com/apache/airflow",
@@ -28,8 +28,8 @@
     "pip_wheel_args": [
       "--prefer-binary"
     ],
-    "source_date_epoch": 1795160985,
-    "source_date_epoch_provenance": "the time release 3.4.0-CE-ubuntu24.04-r3 was cut (2026-11-20T07:49:45Z), by scripts/retarget.py --rev-bump: ReadyStack dates an image by when its release was packaged (owner 2026-11-10), recorded here once and used by every rebuild of the release; it builds upstream commit 619a787ac81e, dated 2026-11-05T06:43:27Z (source.commit_epoch).",
+    "source_date_epoch": 1795644287,
+    "source_date_epoch_provenance": "the time release 3.4.0-CE-ubuntu24.04-r4 was cut (2026-11-25T22:04:47Z), by scripts/rerelease-agenda.py: ReadyStack dates an image by when its release was packaged (owner 2026-11-10), recorded here once and used by every rebuild of the release; it builds upstream commit 619a787ac81e, dated 2026-11-05T06:43:27Z (source.commit_epoch).",
     "_version_note": "3.3.2 is the LATEST airflow GA (queue-latest-version policy, owner 2026-06-25), published 2026-09-17, no leading 'v'. RETARGET WARNING: this repo also tags helm-chart/*, airflow-ctl/* and java-sdk/*, so a naive 'latest tag' read picks up something like java-sdk/1.0.0-beta1. Filter to bare CalVer-ish release tags. The constraints branch name tracks the version exactly (constraints-<version>), so pip_constraints_url must be retargeted in lockstep or the build pins the previous release.",
     "commit": "619a787ac81e8b7c8a9102fc78e3f0b00625d04e",
     "source_date_epoch_basis": "release-cut",
